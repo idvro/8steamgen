@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4v4 Team Generator</title>
+    <title>Team Captain Picker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #111; /* Matte black background */
+            color: white; /* White text */
             margin: 0;
             padding: 0;
             display: flex;
@@ -18,27 +19,30 @@
         .container {
             max-width: 600px;
             padding: 20px;
-            background-color: #ffffff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            background-color: #222; /* Darker background */
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1); /* White shadow */
             border-radius: 8px;
             text-align: center;
         }
         h1 {
-            color: #333333;
+            color: #fff; /* White header */
         }
         label {
             font-weight: bold;
+            color: #fff; /* White label */
         }
         input[type="text"] {
             width: calc(100% - 20px);
             padding: 8px;
             margin: 10px 0;
-            border: 1px solid #cccccc;
+            border: 1px solid #555; /* Darker border */
             border-radius: 4px;
             box-sizing: border-box;
+            background-color: #333; /* Darker input background */
+            color: white; /* White text */
         }
         button {
-            background-color: #4CAF50;
+            background-color: #e74c3c; /* Red button */
             color: white;
             border: none;
             padding: 12px 20px;
@@ -52,7 +56,7 @@
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #c0392b; /* Darker red on hover */
         }
         #teamOutput {
             margin-top: 20px;
@@ -65,17 +69,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>4v4 Team Generator</h1>
+        <h1>Team Captain Picker</h1>
         <form id="teamForm">
             <label for="players">Enter player names or IDs (separated by commas):</label><br>
             <input type="text" id="players" name="players" required><br><br>
-            <button type="button" onclick="generateTeams()">Generate Teams</button>
+            <button type="button" onclick="pickCaptains()">Pick Captains</button>
         </form>
         <div id="teamOutput"></div>
     </div>
 
     <script>
-        function generateTeams() {
+        function pickCaptains() {
             const playersInput = document.getElementById('players').value.trim();
             const players = playersInput.split(',');
             
@@ -85,10 +89,10 @@
             }
 
             let shuffledPlayers = shuffleArray(players);
-            let team1 = shuffledPlayers.slice(0, 4).join(', ');
-            let team2 = shuffledPlayers.slice(4, 8).join(', ');
+            let captain1 = shuffledPlayers[0];
+            let captain2 = shuffledPlayers[1];
 
-            document.getElementById('teamOutput').innerHTML = `<p><strong>Team 1:</strong> ${team1}</p><p><strong>Team 2:</strong> ${team2}</p>`;
+            document.getElementById('teamOutput').innerHTML = `<p><strong>Captain 1:</strong> ${captain1}</p><p><strong>Captain 2:</strong> ${captain2}</p>`;
         }
 
         function shuffleArray(array) {
