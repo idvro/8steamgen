@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vros 8s leaderboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #181824; /* Matte black/navy background */
+            color: #ffffff; /* White text */
+            padding: 20px;
+            position: relative; /* Make body relative for absolute positioning */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ffffff;
+        }
+        th {
+            background-color: #1f1f2a; /* Darker background for table headers */
+        }
+        td {
+            background-color: #272733; /* Dark background for table cells */
+        }
+        tr:hover {
+            background: linear-gradient(to right, #202040, #4f4f7f); /* Gradient hover effect */
+        }
+        .login-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #6c757d; /* Bootstrap gray */
+            color: #ffffff; /* White text */
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+        }
+        .login-btn:hover {
+            background-color: #495057; /* Darker gray on hover */
+        }
+    </style>
+</head>
+<body>
+<script src="script.js"></script>
+    <div class="container-wrap">
+        <section id="leaderboard">
+            <nav class="ladder-nav">
+                <div class="ladder-title">
+                    <h1>Standings</h1>
+                    <a href="login.html" class="login-btn">Login</a>
+                </div>
+            </nav>
+            <table id="rankings" class="leaderboard-results" width="100%">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player Name</th>
+                        <th>SR (Skill Rating)</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Table rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to get players data from local storage or set default values
+        function getPlayersData() {
+            // Check if players data exists in local storage
+            const playersData = localStorage.getItem('players');
+            if (playersData) {
+                return JSON.parse(playersData); // Parse JSON data if it exists
+            } else {
+                // Initialize default players data if not found
+                const defaultPlayers = [
+                    { name: "vro", sr: 0 },
+                    { name: "vegetable", sr: 0 },
+                    { name: "Thanos", sr: 0 },
+                    { name: "B50", sr: 0 },
+                    { name: "DevilsAdvocate", sr: 0 },
+                    { name: "Fortune", sr: 0 },
+                    { name: "Huxley", sr: 0 },
+                    { name: "Jack", sr: 0 },
+                    { name: "Josh", sr: 0 },
+                    { name: "Huxley", sr: 0 }
+                    // Add more players as needed
+                ];
+                localStorage.setItem('players', JSON.stringify(defaultPlayers)); // Save default data to local storage
+                return defaultPlayers;
+            }
+        }
+
+        let players = getPlayersData(); // Initialize players data
+
+        // Function to save players data to local storage
+        function savePlayersData() {
+            localStorage.setItem('players', JSON.stringify(players));
+        }
+
+        // Function to render leaderboard
+        function renderLeaderboard() {
+            const leaderboardBody = document.getElementById('leaderboardBody');
+            leaderboardBody.innerHTML = ''; // Clear existing rows
+
+            players.forEach((player, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${player.name}</td>
+                        <td>${player.sr}</td>
+                    </tr>
+                `;
+                leaderboardBody.innerHTML += row;
+            });
+        }
+
+        // Initial render on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLeaderboard(); // Render leaderboard on page load
+        });
+    </script>
+</body>
+</html>
