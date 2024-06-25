@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Captain Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111; /* Matte black background */
+            color: white; /* White text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #222; /* Darker background */
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1); /* White shadow */
+            border-radius: 8px;
+            text-align: center;
+        }
+        h1 {
+            color: #fff; /* White header */
+        }
+        label {
+            font-weight: bold;
+            color: #fff; /* White label */
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #333; /* Darker input background */
+            color: white; /* White text */
+        }
+        button {
+            background-color: #e74c3c; /* Red button */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #c0392b; /* Darker red on hover */
+        }
+        #teamOutput {
+            margin-top: 20px;
+            text-align: left;
+        }
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Team Captain Picker</h1>
+        <form id="teamForm">
+            <label for="players">Enter player names or IDs (separated by commas):</label><br>
+            <input type="text" id="players" name="players" required><br><br>
+            <button type="button" onclick="pickCaptains()">Pick Captains</button>
+        </form>
+        <div id="teamOutput"></div>
+    </div>
+
+    <script>
+        function pickCaptains() {
+            const playersInput = document.getElementById('players').value.trim();
+            const players = playersInput.split(',');
+            
+            if (players.length < 8) {
+                document.getElementById('teamOutput').innerHTML = '<p>Please provide at least 8 players.</p>';
+                return;
+            }
+
+            let shuffledPlayers = shuffleArray(players);
+            let captain1 = shuffledPlayers[0];
+            let captain2 = shuffledPlayers[1];
+
+            document.getElementById('teamOutput').innerHTML = `<p><strong>Captain 1:</strong> ${captain1}</p><p><strong>Captain 2:</strong> ${captain2}</p>`;
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+    </script>
+</body>
+</html>
